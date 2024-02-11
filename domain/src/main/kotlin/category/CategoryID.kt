@@ -6,7 +6,7 @@ import java.util.*
 open class CategoryID(protected val value: String) : Identifier() {
     companion object {
         fun unique(): CategoryID {
-            return CategoryID.from(UUID.randomUUID())
+            return from(UUID.randomUUID())
         }
 
         fun from(anId: String): CategoryID {
