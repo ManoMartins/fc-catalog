@@ -3,19 +3,14 @@ package com.full.admin.catalog.application.category.create
 import arrow.core.*
 import category.Category
 import category.CategoryGateway
-import exceptions.DomainException
-import io.mockk.MockKAnnotations
-import io.mockk.every
+import io.mockk.*
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
-import io.mockk.mockk
-import io.mockk.verify
 import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import kotlin.test.BeforeTest
 
 @ExtendWith(MockKExtension::class)
 class CreateCategoryUseCaseTest {
@@ -26,8 +21,10 @@ class CreateCategoryUseCaseTest {
     @MockK
     private lateinit var categoryGateway: CategoryGateway
 
-    @BeforeTest
-    fun setUp() = MockKAnnotations.init(this, relaxUnitFun = true)
+    @BeforeEach
+    fun cleanUp() {
+        clearMocks(categoryGateway)
+    }
 
     @Test
     fun givenAValidCommand_whenCallsCreateCategory_shouldReturnCategoryId() {

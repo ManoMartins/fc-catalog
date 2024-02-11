@@ -3,7 +3,7 @@ package category
 import Identifier
 import java.util.*
 
-open class CategoryID(protected val value: String) : Identifier() {
+open class CategoryID(protected val _value: String) : Identifier() {
     companion object {
         fun unique(): CategoryID {
             return from(UUID.randomUUID())
@@ -18,16 +18,19 @@ open class CategoryID(protected val value: String) : Identifier() {
         }
     }
 
+    val value: String
+        get() = _value
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
         other as CategoryID
 
-        return value == other.value
+        return _value == other._value
     }
 
     override fun hashCode(): Int {
-        return value.hashCode()
+        return _value.hashCode()
     }
 }

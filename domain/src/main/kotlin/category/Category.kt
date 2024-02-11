@@ -12,7 +12,7 @@ class Category(
     val createdAt: Instant,
     var updatedAt: Instant,
     var deletedAt: Instant?
-) : AggregateRoot<CategoryID>(anId) {
+) : Cloneable, AggregateRoot<CategoryID>(anId) {
     companion object {
         fun newCategory(aName: String, aDescription: String?, isActive: Boolean): Category {
             val id = CategoryID.unique()
@@ -59,5 +59,9 @@ class Category(
         this.updatedAt = Instant.now()
 
         return this
+    }
+
+    public override fun clone(): Category {
+        return super.clone() as Category
     }
 }
