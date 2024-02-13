@@ -5,6 +5,4 @@ import com.full.admin.catalog.application.UseCase
 import validation.handler.Notification
 
 
-abstract class CreateCategoryUseCase : UseCase<CreateCategoryCommand, Either<Notification, CreateCategoryOutput>>() {
-
-}
+abstract class CreateCategoryUseCase : UseCase<CreateCategoryCommand, Either<Notification, CreateCategoryOutput>>()

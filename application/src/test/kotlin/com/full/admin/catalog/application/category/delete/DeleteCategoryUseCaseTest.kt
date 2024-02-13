@@ -13,7 +13,7 @@ import io.mockk.*
 import org.junit.jupiter.api.Assertions
 
 @ExtendWith(MockKExtension::class)
-class DefaultCategoryUseCaseTest {
+class DeleteCategoryUseCaseTest {
     @InjectMockKs
     private lateinit var useCase: DefaultDeleteCategoryUseCase
 
