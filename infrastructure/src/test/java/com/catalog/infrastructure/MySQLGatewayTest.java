@@ -1,5 +1,6 @@
 package com.catalog.infrastructure;
 
+import com.catalog.infrastructure.category.persistence.CategoryRepository;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -12,6 +13,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.lang.annotation.*;
 import java.util.Collection;
+import java.util.List;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
@@ -30,6 +32,8 @@ public @interface MySQLGatewayTest {
             final var repositories = SpringExtension.getApplicationContext(extensionContext)
                     .getBeansOfType(CrudRepository.class)
                     .values();
+
+            cleanUp(repositories);
         }
 
         private void cleanUp(final Collection<CrudRepository> repositories) {
