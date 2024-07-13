@@ -1,9 +1,10 @@
 package com.catalog.infrastructure.category;
 
+import com.catalog.IntegrationTest;
 import com.catalog.domain.category.Category;
 import com.catalog.domain.category.CategoryID;
 import com.catalog.domain.category.CategorySearchQuery;
-import com.catalog.infrastructure.MySQLGatewayTest;
+import com.catalog.MySQLGatewayTest;
 import com.catalog.infrastructure.category.persistence.CategoryJpaEntity;
 import com.catalog.infrastructure.category.persistence.CategoryRepository;
 import org.junit.jupiter.api.Assertions;
@@ -12,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-@MySQLGatewayTest
+@IntegrationTest
 public class CategoryMySQLGatewayTest {
     @Autowired
     private CategoryMySQLGateway gateway;
