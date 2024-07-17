@@ -6,6 +6,7 @@ import com.catalog.domain.category.Category;
 import com.catalog.domain.category.CategoryGateway;
 import com.catalog.domain.category.CategoryID;
 import com.catalog.domain.exceptions.DomainException;
+import com.catalog.domain.exceptions.NotFoundException;
 import com.catalog.infrastructure.category.persistence.CategoryJpaEntity;
 import com.catalog.infrastructure.category.persistence.CategoryRepository;
 import org.junit.jupiter.api.Assertions;
@@ -56,7 +57,7 @@ public class UpdateCategoryUseCaseIT {
         final var actualOutput = useCase.execute(aCommand).get();
 
         Assertions.assertNotNull(actualOutput);
-        Assertions.assertEquals(expectedId, actualOutput.id());
+        Assertions.assertEquals(expectedId.getValue(), actualOutput.id());
 
         final var actualCategory =
                 categoryRepository.findById(expectedId.getValue()).get();
@@ -118,7 +119,7 @@ public class UpdateCategoryUseCaseIT {
         final var actualOutput = useCase.execute(aCommand).get();
 
         Assertions.assertNotNull(actualOutput);
-        Assertions.assertEquals(expectedId, actualOutput.id());
+        Assertions.assertEquals(expectedId.getValue(), actualOutput.id());
 
         final var actualCategory =
                 categoryRepository.findById(expectedId.getValue()).get();
@@ -178,7 +179,7 @@ public class UpdateCategoryUseCaseIT {
         final var expectIsActive = true;
 
         final var expectedId = "XXXXXXXXX";
-        final var expectedErrorMessage = "Category with ID XXXXXXXXX not found.";
+        final var expectedErrorMessage = "Category with ID XXXXXXXXX was not found";
 
         final var aCommand = UpdateCategoryCommand.with(
                 expectedId,
@@ -188,12 +189,11 @@ public class UpdateCategoryUseCaseIT {
         );
 
         final var actualOutput = Assertions.assertThrows(
-                DomainException.class,
+                NotFoundException.class,
                 () -> useCase.execute(aCommand)
         );
 
-        Assertions.assertEquals(1, actualOutput.getErrors().size());
-        Assertions.assertEquals(expectedErrorMessage, actualOutput.getErrors().get(0).message());
+        Assertions.assertEquals(expectedErrorMessage, actualOutput.getMessage());
     }
 
     private void save(final Category... aCategory) {

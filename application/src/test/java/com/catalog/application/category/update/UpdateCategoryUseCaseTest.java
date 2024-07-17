@@ -4,6 +4,7 @@ import com.catalog.domain.category.Category;
 import com.catalog.domain.category.CategoryGateway;
 import com.catalog.domain.category.CategoryID;
 import com.catalog.domain.exceptions.DomainException;
+import com.catalog.domain.exceptions.NotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -59,7 +60,7 @@ public class UpdateCategoryUseCaseTest {
         final var actualOutput = useCase.execute(aCommand).get();
 
         Assertions.assertNotNull(actualOutput);
-        Assertions.assertEquals(expectedId, actualOutput.id());
+        Assertions.assertEquals(expectedId.getValue(), actualOutput.id());
 
         verify(categoryGateway, Mockito.times(1)).findById(eq(expectedId));
         verify(categoryGateway, Mockito.times(1)).update(argThat(
@@ -127,7 +128,7 @@ public class UpdateCategoryUseCaseTest {
         final var actualOutput = useCase.execute(aCommand).get();
 
         Assertions.assertNotNull(actualOutput);
-        Assertions.assertEquals(expectedId, actualOutput.id());
+        Assertions.assertEquals(expectedId.getValue(), actualOutput.id());
 
         verify(categoryGateway, Mockito.times(1)).findById(eq(expectedId));
         verify(categoryGateway, Mockito.times(1)).update(argThat(
@@ -189,7 +190,7 @@ public class UpdateCategoryUseCaseTest {
         final var expectIsActive = true;
 
         final var expectedId = "XXXXXXXXX";
-        final var expectedErrorMessage = "Category with ID XXXXXXXXX not found.";
+        final var expectedErrorMessage = "Category with ID XXXXXXXXX was not found";
 
         final var aCommand = UpdateCategoryCommand.with(
                 expectedId,
@@ -202,12 +203,11 @@ public class UpdateCategoryUseCaseTest {
                 .thenReturn(Optional.empty());
 
         final var actualOutput = Assertions.assertThrows(
-                DomainException.class,
+                NotFoundException.class,
                 () -> useCase.execute(aCommand)
         );
 
-        Assertions.assertEquals(1, actualOutput.getErrors().size());
-        Assertions.assertEquals(expectedErrorMessage, actualOutput.getErrors().get(0).message());
+        Assertions.assertEquals(expectedErrorMessage, actualOutput.getMessage());
 
         verify(categoryGateway, Mockito.times(1)).findById(eq(CategoryID.from(expectedId)));
         verify(categoryGateway, Mockito.times(0)).update(any());

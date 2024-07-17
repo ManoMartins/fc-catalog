@@ -55,7 +55,7 @@ public class GetCategoryByIdUseCaseIT {
 
     @Test
     public void givenAnInvalidId_whenCallsGetCategory_shouldReturnNotFound() {
-        final var expectedErrorMessage = "Category with ID 123 not found.";
+        final var expectedErrorMessage = "Category with ID 123 was not found";
         final var expectedId  = CategoryID.from("123");
 
         final var actualException = Assertions.assertThrows(
