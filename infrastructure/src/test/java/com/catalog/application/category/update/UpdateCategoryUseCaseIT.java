@@ -1,11 +1,8 @@
 package com.catalog.application.category.update;
 
 import com.catalog.IntegrationTest;
-import com.catalog.application.category.retrieve.get.CategoryOutput;
 import com.catalog.domain.category.Category;
 import com.catalog.domain.category.CategoryGateway;
-import com.catalog.domain.category.CategoryID;
-import com.catalog.domain.exceptions.DomainException;
 import com.catalog.domain.exceptions.NotFoundException;
 import com.catalog.infrastructure.category.persistence.CategoryJpaEntity;
 import com.catalog.infrastructure.category.persistence.CategoryRepository;
@@ -16,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 
 import java.util.Arrays;
-import java.util.Objects;
-import java.util.Optional;
 
-import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
