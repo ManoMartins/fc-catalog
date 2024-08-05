@@ -3,7 +3,7 @@ package com.catalog.infrastructure.category;
 import com.catalog.domain.category.Category;
 import com.catalog.domain.category.CategoryGateway;
 import com.catalog.domain.category.CategoryID;
-import com.catalog.domain.category.CategorySearchQuery;
+import com.catalog.domain.pagination.SearchQuery;
 import com.catalog.domain.pagination.Pagination;
 import com.catalog.infrastructure.category.persistence.CategoryJpaEntity;
 import com.catalog.infrastructure.category.persistence.CategoryRepository;
@@ -13,7 +13,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.*;
 import java.util.Optional;
 
 import static com.catalog.infrastructure.utils.SpecificationUtils.like;
@@ -51,7 +50,7 @@ public class CategoryMySQLGateway implements CategoryGateway {
     }
 
     @Override
-    public Pagination<Category> findAll(final CategorySearchQuery aQuery) {
+    public Pagination<Category> findAll(final SearchQuery aQuery) {
         final var specifications = Optional.ofNullable(aQuery.terms())
                 .filter(str -> !str.isBlank())
                 .map(str -> SpecificationUtils
